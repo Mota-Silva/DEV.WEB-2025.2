@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Completo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        
+        input:invalid {
+            border-left: 3px solid #e74c3c;
+        }
+        
+        input:valid {
+            border-left: 3px solid #2ecc71;
+        }
+        
+        .satisfaction-section {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .slider-container {
+            margin-bottom: 15px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            margin: 15px 0;
+            height: 10px;
+            appearance: none;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #e74c3c, #e67e22, #f1c40f, #2ecc71, #27ae60);
+            border-radius: 5px;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #3498db;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        
+        .value-display {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+        
+        .visualization {
+            width: 100%;
+            height: 40px;
+            margin: 15px 0;
+            border-radius: 5px;
+            background: #f0f0f0;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .feedback {
+            text-align: center;
+            font-weight: 600;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: white;
+        }
+        
+        .submit-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: not-allowed;
+            width: 100%;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn.enabled {
+            background: #3498db;
+            cursor: pointer;
+        }
+        
+        .submit-btn.enabled:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .confirmation {
+            text-align: center;
+            padding: 15px;
+            border-radius: 5px;
+            background: #d4edda;
+            color: #155724;
+            display: none;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulário de Cadastro</h1>
+        <form id="completeForm">
+            <div class="form-group">
+                <label for="nome">Nome completo <span class="required">*</span></label>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input type="email" id="email" name="email" placeholder="seu.email@exemplo.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="nascimento">Data de nascimento <span class="required">*</span></label>
+                <input type="date" id="nascimento" name="nascimento" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="telefone">Telefone <span class="required">*</span></label>
+                <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" required pattern="^\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}$">
+            </div>
+            
+            <div class="satisfaction-section">
+                <h2 style="text-align: center; margin-top: 0;">Nível de Satisfação</h2>
+                
+                <div class="slider-container">
+                    <input type="range" id="satisfaction" min="0" max="100" value="50" required>
+                    <div class="value-display"><span id="valueDisplay">50</span>/100</div>
+                </div>
+                
+                <div class="visualization" id="visualization"></div>
+                
+                <div class="feedback" id="feedbackMessage">
+                    <span id="feedbackEmoji">😐</span>
+                    <span id="feedbackText">Satisfação moderada</span>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>Enviar Formulário</button>
+            
+            <div class="confirmation" id="confirmation">
+                Obrigado! Seu formulário foi enviado com sucesso.
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Elementos do DOM
+        const form = document.getElementById('completeForm');
+        const nomeInput = document.getElementById('nome');
+        const emailInput = document.getElementById('email');
+        const nascimentoInput = document.getElementById('nascimento');
+        const telefoneInput = document.getElementById('telefone');
+        const satisfactionInput = document.getElementById('satisfaction');
+        const valueDisplay = document.getElementById('valueDisplay');
+        const visualization = document.getElementById('visualization');
+        const feedbackMessage = document.getElementById('feedbackText');
+        const feedbackEmoji = document.getElementById('feedbackEmoji');
+        const submitBtn = document.getElementById('submitBtn');
+        const confirmation = document.getElementById('confirmation');
+        
+        // Inicialização
+        updateVisualization(50);
+        checkFormValidity();
+        
+        // Event listeners para os campos do formulário
+        const formInputs = [nomeInput, emailInput, nascimentoInput, telefoneInput, satisfactionInput];
+        formInputs.forEach(input => {
+            input.addEventListener('input', checkFormValidity);
+        });
+        
+        // Event listener para o controle deslizante
+        satisfactionInput.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            valueDisplay.textContent = value;
+            updateVisualization(value);
+        });
+        
+        // Event listener para envio do formulário
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulação de envio bem-sucedido
+            confirmation.style.display = 'block';
+            submitBtn.disabled = true;
+            submitBtn.classList.remove('enabled');
+            
+            // Rolagem para a mensagem de confirmação
+            confirmation.scrollIntoView({ behavior: 'smooth' });
+            
+            // Reset do formulário após 5 segundos
+            setTimeout(function() {
+                form.reset();
+                updateVisualization(50);
+                valueDisplay.textContent = '50';
+                feedbackMessage.textContent = 'Satisfação moderada';
+                feedbackEmoji.textContent = '😐';
+                confirmation.style.display = 'none';
+                checkFormValidity();
+            }, 5000);
+        });
+        
+        // Função para verificar a validade do formulário
+        function checkFormValidity() {
+            const isFormValid = form.checkValidity();
+            
+            if (isFormValid) {
+                submitBtn.disabled = false;
+                submitBtn.classList.add('enabled');
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.classList.remove('enabled');
+            }
+        }
+        
+        // Função para atualizar a visualização
+        function updateVisualization(value) {
+            visualization.innerHTML = '';
+            
+            const svgNS = "http://www.w3.org/2000/svg";
+            const svg = document.createElementNS(svgNS, "svg");
+            svg.setAttribute("width", "100%");
+            svg.setAttribute("height", "100%");
+            svg.setAttribute("viewBox", "0 0 100 10");
+            
+            const background = document.createElementNS(svgNS, "rect");
+            background.setAttribute("width", "100");
+            background.setAttribute("height", "10");
+            background.setAttribute("fill", "#ecf0f1");
+            background.setAttribute("rx", "2");
+            svg.appendChild(background);
+            
+            const progress = document.createElementNS(svgNS, "rect");
+            progress.setAttribute("width", value);
+            progress.setAttribute("height", "10");
+            progress.setAttribute("fill", getColorForValue(value));
+            progress.setAttribute("rx", "2");
+            svg.appendChild(progress);
+            
+            visualization.appendChild(svg);
+            updateFeedback(value);
+        }
+        
+        // Função para determinar a cor com base no valor
+        function getColorForValue(value) {
+            if (value < 20) return '#e74c3c';
+            if (value < 40) return '#e67e22';
+            if (value < 60) return '#f1c40f';
+            if (value < 80) return '#2ecc71';
+            return '#27ae60';
+        }
+        
+        // Função para atualizar o feedback
+        function updateFeedback(value) {
+            let message, emoji;
+            
+            if (value < 20) {
+                message = "Muito insatisfeito";
+                emoji = "😠";
+            } else if (value < 40) {
+                message = "Insatisfeito";
+                emoji = "😔";
+            } else if (value < 60) {
+                message = "Neutro";
+                emoji = "😐";
+            } else if (value < 80) {
+                message = "Satisfeito";
+                emoji = "🙂";
+            } else {
+                message = "Muito satisfeito";
+                emoji = "😁";
+            }
+            
+            feedbackMessage.textContent = message;
+            feedbackEmoji.textContent = emoji;
+        }
+        
+        // Máscara para telefone
+        telefoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length > 11) {
+                value = value.slice(0, 11);
+            }
+            
+            if (value.length > 0) {
+                value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+            }
+            if (value.length > 10) {
+                value = value.replace(/(\d{5})(\d)/, '$1-$2');
+            } else if (value.length > 5) {
+                value = value.replace(/(\d{4})(\d)/, '$1-$2');
+            }
+            
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
