@@ -9,6 +9,9 @@
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
+            padding: 0;
+            overflow-x: hidden;
         }
 
         .container {
@@ -20,13 +23,13 @@
 
         /* Header e navegação */
         header {
-            background-color: #2b2b2c;
+            background-color: #2c3e50;
             color: white;
-            padding: 0.3rem 0;
+            padding: 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             width: 100%;
         }
 
@@ -34,12 +37,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
+            padding: 15px 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
+            flex-wrap: wrap;
         }
 
         .nav-links li {
@@ -50,9 +61,10 @@
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s;
             padding: 0.5rem 0.8rem;
             border-radius: 4px;
+            display: block;
         }
 
         .nav-links a:hover {
@@ -67,7 +79,7 @@
         }
 
         .login-form input {
-            padding: 0.3rem 0.5rem;
+            padding: 0.6rem;
             border: none;
             border-radius: 4px;
             outline: none;
@@ -76,20 +88,41 @@
         .login-form input[type="email"],
         .login-form input[type="password"] {
             background-color: rgba(255, 255, 255, 0.9);
-            width: 200px;
+            width: 160px;
         }
 
         .login-form input[type="submit"] {
-            background-color: green;
+            background-color: #3498db;
             color: white;
             cursor: pointer;
             font-weight: bold;
             transition: background-color 0.3s;
-            padding: 0.3rem 0.5rem;
+            padding: 0.6rem 1.2rem;
         }
 
         .login-form input[type="submit"]:hover {
             background-color: #2980b9;
+        }
+
+        /* Menu hamburger (só aparece em mobile) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
         }
 
         /* Conteúdo */
@@ -104,11 +137,13 @@
         h1 {
             color: #2c3e50;
             margin-bottom: 15px;
+            font-size: 2rem;
         }
 
         p {
             margin-bottom: 15px;
             line-height: 1.6;
+            font-size: 1.1rem;
         }
 
         .highlight {
@@ -119,16 +154,32 @@
             margin: 15px 0;
         }
 
-        /* MOBILE - Layout específico solicitado */
-        @media (max-width: 768px) {
+        /* MOBILE - Layout específico */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+            
+            .container {
+                padding: 0 10px;
+            }
+            
             header {
-                padding: 0.5rem 0;
-                position: relative;
+                padding: 0;
+                border-radius: 0;
             }
             
             nav {
                 flex-direction: column;
-                padding: 0 15px;
+                padding: 15px;
+                align-items: stretch;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                position: absolute;
+                right: 20px;
+                top: 20px;
             }
             
             /* Formulário empilhado: email -> senha -> botão */
@@ -136,74 +187,107 @@
                 flex-direction: column;
                 width: 100%;
                 gap: 12px;
-                order: 1; /* Coloca o formulário em cima */
+                order: 1;
                 margin-bottom: 15px;
+                display: none;
+            }
+            
+            .login-form.active {
+                display: flex;
             }
             
             .login-form input[type="email"],
             .login-form input[type="password"],
             .login-form input[type="submit"] {
                 width: 100%;
-                max-width: 300px;
-                margin: 0 auto;
                 padding: 0.8rem;
+                font-size: 16px; /* Prevent zoom on iOS */
             }
             
             /* Menu horizontal na parte inferior */
             .nav-links {
-                order: 2; /* Coloca o menu embaixo */
+                order: 2;
                 justify-content: center;
                 width: 100%;
                 flex-wrap: wrap;
                 margin-top: 15px;
                 padding: 10px 0;
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
+                display: none;
+            }
+            
+            .nav-links.active {
+                display: flex;
             }
             
             .nav-links li {
-                margin: 0 0.5rem;
+                margin: 5px;
             }
             
             .nav-links a {
                 padding: 0.5rem 0.7rem;
                 font-size: 0.9rem;
-            }
-        }
-
-        /* Ajustes para mobile muito pequeno */
-        @media (max-width: 480px) {
-            .nav-links {
-                gap: 5px;
-            }
-            
-            .nav-links li {
-                margin: 0 0.3rem;
-            }
-            
-            .nav-links a {
-                padding: 0.4rem 0.6rem;
-                font-size: 0.85rem;
-            }
-            
-            .login-form input[type="email"],
-            .login-form input[type="password"],
-            .login-form input[type="submit"] {
-                max-width: 100%;
+                text-align: center;
             }
             
             .content {
                 padding: 15px;
                 margin-top: 20px;
             }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Ajustes para mobile muito pequeno */
+        @media screen and (max-width: 480px) {
+            .nav-links {
+                gap: 3px;
+            }
+            
+            .nav-links li {
+                margin: 3px;
+            }
+            
+            .nav-links a {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .login-form input[type="email"],
+            .login-form input[type="password"],
+            .login-form input[type="submit"] {
+                padding: 0.7rem;
+            }
         }
 
         /* Desktop - garantir que fique horizontal */
-        @media (min-width: 769px) {
+        @media screen and (min-width: 769px) {
             .login-form {
                 flex-direction: row;
+                display: flex !important;
             }
             
             .nav-links {
                 flex-direction: row;
+                display: flex !important;
             }
+        }
+
+        /* Animações para o menu hamburger */
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
         }
