@@ -4,18 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Menu de Navegação Responsivo</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Mota-Silva/DEV.WEB-2025.2@main/HTML/Formulario-html%2Bcss/styles.css">
 </head>
 <body>
     <div class="container">
         <header>
             <nav>
+                
+                <button class="menu-toggle" aria-label="Abrir menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
                 <ul class="nav-links">
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Serviços</a></li>
+                    <li><a href="#">Contato</a></li>
                 </ul>
+    
                 <form class="login-form">
                     <input type="email" placeholder="Email" required>
                     <input type="password" placeholder="Senha" required>
@@ -23,6 +31,33 @@
                 </form>
             </nav>
         </header>
-    </script>
+
+        
+
+        <script>
+            // JavaScript para o menu hamburger
+            document.addEventListener('DOMContentLoaded', function() {
+                const menuToggle = document.querySelector('.menu-toggle');
+                const navLinks = document.querySelector('.nav-links');
+                const loginForm = document.querySelector('.login-form');
+                
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    loginForm.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                });
+                
+                // Fechar o menu ao clicar em um link
+                const navItems = document.querySelectorAll('.nav-links a');
+                navItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        navLinks.classList.remove('active');
+                        loginForm.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    });
+                });
+            });
+        </script>
+    </div>
 </body>
 </html>
