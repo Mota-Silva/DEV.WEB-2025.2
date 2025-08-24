@@ -9,26 +9,26 @@
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
-            padding-top: 0; /* Removemos o padding superior */
+            padding-top: 0; 
         }
 
         .container {
             width: 100%;
-            max-width: 100%; /* Expandido para largura total */
+            max-width: 100%; 
             margin: 0 auto;
         }
 
-        /* Estilização do cabeçalho e menu - MODIFICADO */
+        /* Estilização do cabeçalho e menu  */
         header {
             background-color: #333;
             color: white;
-            padding: 0.6rem 0; /* Reduzido o padding vertical */
+            padding: 0.6rem 0; 
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 100;
-            border-radius: 0; /* Removido o border-radius */
-            width: 100%; /* Expandido para 100% da largura */
+            border-radius: 0; 
+            width: 100%; 
             left: 0;
         }
 
@@ -37,14 +37,14 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            padding: 0 20px; /* Adicionado padding lateral */
+            padding: 0 20px; 
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             margin-right: auto;
-            padding-left: 10px; /* Reduzido o padding */
+            padding-left: 10px; 
         }
 
         .nav-links li {
