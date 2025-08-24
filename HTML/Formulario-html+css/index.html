@@ -10,20 +10,32 @@
     <div class="container">
         <header>
             <nav>
-                <ul class="nav-links">
+                <button class="menu-toggle" aria-label="Abrir menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+    
+                <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Serviços</a></li>
+                    <li><a href="#">Contato</a></li>
                 </ul>
-                <form class="login-form">
+    
+                <form>
                     <input type="email" placeholder="Email" required>
                     <input type="password" placeholder="Senha" required>
-                    <input type="submit" value="Login">
+                    <input type="submit" value="Entrar">
                 </form>
             </nav>
         </header>
-    </script>
-</body>
+        <script>
+            document.querySelector('.menu-toggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('nav ul').classList.toggle('active');
+        });
+        </script>
 
+</body>
 </html>
