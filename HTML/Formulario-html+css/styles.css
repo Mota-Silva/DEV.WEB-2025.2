@@ -2,233 +2,195 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
+            background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
-            padding-top: 60px; /* Espaço para a navegação fixa */
+            padding-top: 0; /* Removemos o padding superior */
         }
 
-        /* Navegação superior expandida */
-        nav {
-            background-color: rgb(30, 29, 29);
-            padding: 0.5rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            position: fixed;
-            top: 0;
-            left: 0;
+        .container {
             width: 100%;
-            z-index: 1000;
-        }
-
-        /* Container interno para o conteúdo da navegação */
-        .nav-container {
-            width: 100%;
-            max-width: 1200px;
+            max-width: 100%; /* Expandido para largura total */
             margin: 0 auto;
+        }
+
+        /* Estilização do cabeçalho e menu - MODIFICADO */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 0.6rem 0; /* Reduzido o padding vertical */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-radius: 0; /* Removido o border-radius */
+            width: 100%; /* Expandido para 100% da largura */
+            left: 0;
+        }
+
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 1rem;
+            flex-wrap: wrap;
+            padding: 0 20px; /* Adicionado padding lateral */
         }
 
-        /* Estilização da lista de links */
-        nav ul {
+        .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            margin-right: auto;
+            padding-left: 10px; /* Reduzido o padding */
         }
 
-        /* Estilização dos links */
-        nav ul li a {
-            color: #ecf0f1;
+        .nav-links li {
+            margin-left: 1.2rem;
+        }
+
+        .nav-links a {
+            color: white;
             text-decoration: none;
             font-weight: 500;
-            padding: 0.8rem 1rem;
+            transition: color 0.3s;
+            padding: 0.5rem 0.5rem;
             border-radius: 4px;
-            transition: all 0.3s ease;
-            display: block;
+            font-size: 0.95rem;
         }
 
-        /* Efeito hover nos links usando pseudo-classe */
-        nav ul li a:hover {
-            background-color: grey;
-            color: #ffffff;
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* Estilização do formulário */
-        nav form {
+        /* Estilização do formulário de login */
+        .login-form {
             display: flex;
-            gap: 0.5rem;
             align-items: center;
+            gap: 10px;
+            margin-left: auto;
+            padding-right: 10px; 
         }
 
-        /* Estilização dos campos de entrada */
-        nav form input[type="email"],
-        nav form input[type="password"] {
-            padding: 0.5rem;
-            border: 1px solid #bdc3c7;
+        .login-form input {
+            padding: 0.2rem;
+            border: none;
             border-radius: 4px;
-            background-color: #ecf0f1;
-            font-size: 0.9rem;
+            outline: none;
         }
 
-        /* Estilização do botão */
-        nav form input[type="submit"] {
-            padding: 0.5rem 1rem;
-            background-color: green;
+        .login-form input[type="email"],
+        .login-form input[type="password"] {
+            background-color: rgba(255, 255, 255, 0.9);
+            width: 200px;
+        }
+
+        .login-form input[type="submit"] {
+            background-color: #4CAF50;
             color: white;
-            border: none;
-            border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 0.9rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            padding: 0.2rem 0.7rem;
         }
 
-        /* Efeito hover no botão */
-        nav form input[type="submit"]:hover {
-            background-color: #2980b9;
+        .login-form input[type="submit"]:hover {
+            background-color: #388E3C;
         }
 
-        /* Menu hamburguer - apenas para mobile */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        .menu-toggle span {
-            width: 100%;
-            height: 3px;
-            background-color: #ecf0f1;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        /* Conteúdo principal */
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding: 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header h1 {
-            color: #2c3e50;
-            margin-bottom: 0.5rem;
-        }
-
+        /* Conteúdo explicativo */
         .content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
+            margin-top: 30px;
+            padding: 20px;
             background: white;
             border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .card h2 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
         }
 
-        /* Media Queries para responsividade */
-        @media screen and (max-width: 768px) {
-            /* Menu hamburguer visível apenas em mobile */
-            .menu-toggle {
-                display: flex;
-                z-index: 1001;
+        p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            background: #f0f7ff;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        /* Responsividade - Mantendo a lista sempre visível */
+        @media (max-width: 992px) {
+            .nav-links li {
+                margin-left: 1rem;
             }
             
-            /* Esconde a lista de navegação por padrão em mobile */
-            nav ul {
-                position: fixed;
+            .login-form input[type="email"],
+            .login-form input[type="password"] {
+                width: 140px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
                 flex-direction: column;
-                background-color: rgb(30, 29, 29);
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 70%;
-                max-width: 300px;
-                padding: 5rem 1.5rem 2rem;
-                gap: 1.5rem;
-                transition: right 0.3s ease;
-                z-index: 1000;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+                align-items: stretch;
             }
             
-            /* Quando o menu está aberto */
-            nav ul.active {
-                right: 0;
+            .nav-links {
+                margin-right: 0;
+                padding: 10px 0;
+                justify-content: center;
+                order: 2;
+                border-top: 1px solid #555;
+                margin-top: 10px;
             }
             
-            /* Ajusta o formulário de login em mobile */
-            nav form {
+            .nav-links li {
+                margin: 0 0.5rem;
+            }
+            
+            .login-form {
+                margin-left: 0;
+                padding: 0 20px;
+                justify-content: center;
+                order: 1;
+            }
+            
+            .login-form input[type="email"],
+            .login-form input[type="password"] {
+                width: 100%;
+                max-width: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
                 flex-wrap: wrap;
-                justify-content: flex-end;
-                margin-left: auto;
-                padding-right: 10px;
             }
             
-            nav form input[type="email"],
-            nav form input[type="password"] {
-                width: 100%;
-                margin-bottom: 0.5rem;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            /* Ajustes adicionais para telas muito pequenas */
-            .nav-container {
-                padding: 0 0.5rem;
+            .nav-links li {
+                margin: 5px;
             }
             
-            nav form {
+            .login-form {
                 flex-direction: column;
-                width: 100%;
-                max-width: 200px;
+                gap: 8px;
             }
             
-            nav form input[type="email"],
-            nav form input[type="password"],
-            nav form input[type="submit"] {
-                width: 100%;
+            .login-form input[type="email"],
+            .login-form input[type="password"] {
+                max-width: 100%;
             }
-        }
-
-        /* Animações para o menu hamburguer */
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
         }
