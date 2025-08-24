@@ -10,6 +10,12 @@
     <div class="container">
         <header>
             <nav>
+                <!-- Botão hamburger para mobile -->
+                <button class="menu-toggle" aria-label="Abrir menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 
                 <ul class="nav-links">
                     <li><a href="#">Home</a></li>
@@ -25,12 +31,31 @@
                 </form>
             </nav>
         </header>
-        <script>
-            document.querySelector('nav-links').addEventListener('click', function() {
-            this.classList.toggle('active');
-            document.querySelector('nav ul').classList.toggle('active');
-        });
-        </script>
 
+        <script>
+            // JavaScript para o menu hamburger
+            document.addEventListener('DOMContentLoaded', function() {
+                const menuToggle = document.querySelector('.menu-toggle');
+                const navLinks = document.querySelector('.nav-links');
+                const loginForm = document.querySelector('.login-form');
+                
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    loginForm.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                });
+                
+                // Fechar o menu ao clicar em um link
+                const navItems = document.querySelectorAll('.nav-links a');
+                navItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        navLinks.classList.remove('active');
+                        loginForm.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    });
+                });
+            });
+        </script>
+    </div>
 </body>
 </html>
