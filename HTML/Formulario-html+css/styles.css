@@ -1,0 +1,63 @@
+nav {
+    background-color: rgb(30, 29, 29); /* Cor de fundo azul escuro */
+    padding: 0.2rem 0.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilização da lista de links */
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 3rem; /* Espaçamento entre os links */
+}
+
+/* Estilização dos links */
+nav ul li a {
+    color: #ecf0f1; /* Cor do texto clara para contraste */
+    text-decoration: none;
+    font-weight: 500;
+    padding: 1rem 0.2rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+/* Efeito hover nos links usando pseudo-classe */
+nav ul li a:hover {
+    background-color: grey; /* Cor de fundo ao passar o mouse */
+    color: #ffffff;
+}
+
+/* Estilização do formulário */
+nav form {
+    display: flex;
+    gap: 0.5rem; /* Espaçamento entre os campos */
+    align-items: center;
+}
+
+/* Estilização dos campos de entrada */
+nav form input[type="email"],
+nav form input[type="password"] {
+    padding: 0.2rem;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    background-color: #ecf0f1;
+}
+
+/* Estilização do botão */
+nav form input[type="submit"] {
+    padding: 0.3rem 0.8rem;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Efeito hover no botão */
+nav form input[type="submit"]:hover {
+    background-color: #2980b9;
+}
