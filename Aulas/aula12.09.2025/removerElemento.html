@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remover Elementos</title>
+</head>
+<body>  
+    <div id="conteudo">
+        <p>Este é um parágrafo.</p>
+    </div>
+    <button onclick="removerElemento()">Remover Parágrafo</button>
+    <script>
+        function removerElemento() {
+            const conteudo = document.getElementById('conteudo');
+            conteudo.remove();
+        }
+    </script>
+</body>
+
+</html>
