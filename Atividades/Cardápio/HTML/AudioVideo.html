@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste</title>
+</head>
+<body>
+    
+
+    <h1>Áudio</h1>
+        <iframe src="https://drive.google.com/file/d/1aIWFT4YamqY6Xapp37jMmBV398idPZxy/preview" width="500" height="30" allow="autoplay"></iframe>
+  
+
+    <h1>Vídeo</h1>
+        <iframe src="https://drive.google.com/file/d/1NQUQALuUEVfruU4mGTrCeXvpUpxbllKM/preview" 
+        width="320" 
+        height="290" 
+        allow="autoplay" 
+        title="Vídeo do Google Drive">
+        
+      </iframe>
+        
+        
+    <h2>Geolocalização</h2>
+  <button onclick="mostrarLocalizacao()">Mostrar minha localização</button>
+  <p id="saida"></p>
+
+  <script>
+    function mostrarLocalizacao() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(posicao) {
+          let latitude = posicao.coords.latitude;
+          let longitude = posicao.coords.longitude;
+          document.getElementById("saida").innerHTML =
+            "Latitude: " + latitude + "<br>Longitude: " + longitude;
+        });
+      } else {
+        document.getElementById("saida").innerHTML =
+          "Geolocalização não é suportada neste navegador.";
+      }
+    }
+  </script>
+
+
+
+
+    <div class="integrantes-box">
+    <h1> Integrantes </h1>
+    <ul>
+        <li> Carlos Michael Mota Silva</li>
+        <li> Dallyla De Sousa Almeida</li>
+        <li> Antonio Noé</li>
+        <li>Arthur Jardim</li>
+        <li> Luiz Felipe Pereira Santos</li>
+    </ul>
+</div> 
+<style>
+  .integrantes-box {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+</style>
+
+
+</body>
+</html>
