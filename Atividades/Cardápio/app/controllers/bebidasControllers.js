@@ -26,18 +26,24 @@ const bebidasController = {
 
     createBebidas: async (req, res) => {
         try {
-            const { nome, preco, disponivel } = req.body;
+            const { id, nome, preco, disponivel } = req.body;
             
-            if (!nome || !preco || !disponivel) {
+            if (!nome || preco === undefined || preco === null || preco === '') {
                 return res.status(400).json({ 
-                    error: 'Todos os campos são obrigatórios (nome, preco, disponivel)' 
+                    error: 'Campos obrigatórios: nome, preco' 
                 });
             }
-            const newBebidas = await Bebidas.create(nome, preco, disponivel);
+
+            if (id) {
+                const updated = await Bebidas.update(id, nome, preco, disponivel !== undefined ? disponivel : true);
+                return res.json(updated);
+            }
+
+            const newBebidas = await Bebidas.create(nome, preco, disponivel !== undefined ? disponivel : true);
             res.status(201).json(newBebidas);
         } catch (error) {
-            console.error('Erro ao criar bebida:', error);
-            res.status(500).json({ error: 'Erro ao criar nova bebida', details: error.message });
+            console.error('Erro ao criar/atualizar bebida:', error);
+            res.status(500).json({ error: 'Erro ao processar bebida', details: error.message });
         }
     },
 

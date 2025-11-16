@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - Cadastro de Alimentos</title>
+  <style>
+    body{font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;background:#f5f7fa;color:#222;margin:0;padding:20px}
+    .container{max-width:1000px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+    h1{font-size:1.4rem}
+    .card{background:#fff;padding:16px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:16px}
+    form .row{display:flex;gap:12px;flex-wrap:wrap}
+    input,select{padding:8px;border:1px solid #ddd;border-radius:4px}
+    button{padding:8px 12px;border-radius:4px;border:none;background:#3498db;color:#fff;cursor:pointer}
+    button.toggle{background:#f39c12;font-size:0.8rem;padding:4px 8px;margin-right:4px}
+    button.delete{background:#e74c3c;font-size:0.8rem;padding:4px 8px}
+    table{width:100%;border-collapse:collapse;font-size:0.9rem}
+    th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+    .action-cell{white-space:nowrap}
+    .flex{display:flex;gap:12px}
+    .small{width:120px}
+    .success{color:green}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Cadastro de Alimentos</h1>
+      <div>
+        <button id="refreshBtn">Atualizar listagens</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2>Novo alimento</h2>
+      <form id="foodForm">
+        <div class="row">
+          <select id="tipo" required>
+            <option value="doces">Doce</option>
+            <option value="salgados">Salgado</option>
+            <option value="bebidas">Bebida</option>
+          </select>
+
+          <input id="nome" placeholder="Nome" required />
+          <input id="preco" type="number" step="0.01" placeholder="Preço" required />
+          <label style="display:flex;align-items:center;gap:8px"><input id="disponivel" type="checkbox" checked/>Disponível</label>
+
+          <div style="margin-left:auto">
+            <button type="submit">Cadastrar</button>
+          </div>
+        </div>
+      </form>
+      <div id="message" style="margin-top:8px"></div>
+    </section>
+
+    <section class="card">
+      <h2>Listagens</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <div>
+          <h3>Doces</h3>
+          <div id="docesList">Carregando...</div>
+        </div>
+        <div>
+          <h3>Salgados</h3>
+          <div id="salgadosList">Carregando...</div>
+        </div>
+        <div>
+          <h3>Bebidas</h3>
+          <div id="bebidasList">Carregando...</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const apiBase = '/api';
+
+    async function postItem(tipo, payload) {
+      const res = await fetch(`${apiBase}/${tipo}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      return res;
+    }
+
+    async function fetchList(tipo) {
+      const res = await fetch(`${apiBase}/${tipo}`);
+      if (!res.ok) return [];
+      return res.json();
+    }
+
+    function renderTable(items, tipo) {
+      if (!items || items.length === 0) return '<div style="font-style:italic;color:#777">Nenhum item</div>';
+      let html = '<table><thead><tr><th>Nome</th><th>Preço</th><th>Disponível</th><th>Ações</th></tr></thead><tbody>';
+      for (const it of items) {
+        const toggleLabel = it.disponivel ? 'Indisponível' : 'Disponível';
+        const toggleStyle = it.disponivel ? 'background:#f39c12' : 'background:#27ae60';
+        html += `<tr>
+          <td>${escapeHtml(it.nome)}</td>
+          <td>R$ ${Number(it.preco).toFixed(2)}</td>
+          <td>${it.disponivel ? 'Sim' : 'Não'}</td>
+          <td class="action-cell">
+            <button class="toggle" style="${toggleStyle}" onclick="toggleDisponivel('${tipo}', ${it.id})">🔄</button>
+            <button class="delete" onclick="deleteItem('${tipo}', ${it.id})">❌</button>
+          </td>
+        </tr>`;
+      }
+      html += '</tbody></table>';
+      return html;
+    }
+
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    async function refreshAll(){
+      document.getElementById('docesList').innerHTML = 'Carregando...';
+      document.getElementById('salgadosList').innerHTML = 'Carregando...';
+      document.getElementById('bebidasList').innerHTML = 'Carregando...';
+
+      const [doces, salgados, bebidas] = await Promise.all([
+        fetchList('doces'),
+        fetchList('salgados'),
+        fetchList('bebidas')
+      ]);
+
+      document.getElementById('docesList').innerHTML = renderTable(doces, 'doces');
+      document.getElementById('salgadosList').innerHTML = renderTable(salgados, 'salgados');
+      document.getElementById('bebidasList').innerHTML = renderTable(bebidas, 'bebidas');
+    }
+
+    document.getElementById('foodForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const tipo = document.getElementById('tipo').value;
+      const nome = document.getElementById('nome').value.trim();
+      const preco = document.getElementById('preco').value;
+      const disponivel = document.getElementById('disponivel').checked;
+
+      const messageEl = document.getElementById('message');
+      messageEl.textContent = '';
+
+      if (!nome || preco === '') {
+        messageEl.textContent = 'Preencha nome e preço.';
+        return;
+      }
+
+      try {
+        const res = await postItem(tipo, { nome, preco, disponivel });
+        if (res.ok) {
+          messageEl.innerHTML = '<span class="success">Cadastrado com sucesso.</span>';
+          e.target.reset();
+          document.getElementById('disponivel').checked = true;
+          await refreshAll();
+        } else {
+          const err = await res.json().catch(()=>({ error: res.statusText }));
+          messageEl.textContent = 'Erro: ' + (err.error || JSON.stringify(err));
+        }
+      } catch (err) {
+        messageEl.textContent = 'Erro de conexão: ' + err.message;
+      }
+    });
+
+    async function toggleDisponivel(tipo, id) {
+      try {
+        const list = await fetchList(tipo);
+        const item = list.find(x => x.id === id);
+        if (!item) { alert('Item não encontrado'); return; }
+        const res = await fetch(`${apiBase}/${tipo}/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nome: item.nome, preco: item.preco, disponivel: !item.disponivel })
+        });
+        if (res.ok) {
+          await refreshAll();
+        } else {
+          alert('Erro ao atualizar');
+        }
+      } catch (err) {
+        alert('Erro: ' + err.message);
+      }
+    }
+
+    async function deleteItem(tipo, id) {
+      if (!confirm('Tem certeza que deseja deletar?')) return;
+      try {
+        const res = await fetch(`${apiBase}/${tipo}/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          await refreshAll();
+        } else {
+          alert('Erro ao deletar');
+        }
+      } catch (err) {
+        alert('Erro: ' + err.message);
+      }
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', refreshAll);
+
+    // initial load
+    refreshAll();
+  </script>
+</body>
+</html>

@@ -26,18 +26,25 @@ const docesController = {
 
     createDoces: async (req, res) => {
         try {
-            const { nome, preco, disponivel } = req.body;
+            const { id, nome, preco, disponivel } = req.body;
             
-            if (!nome || !preco || !disponivel) {
+            if (!nome || preco === undefined || preco === null || preco === '') {
                 return res.status(400).json({ 
-                    error: 'Todos os campos são obrigatórios (nome, preco, disponivel)' 
+                    error: 'Campos obrigatórios: nome, preco' 
                 });
             }
-            const newDoces = await Doces.create(nome, preco, disponivel);
+
+            // Se id foi fornecido, faz update; senão, cria novo
+            if (id) {
+                const updated = await Doces.update(id, nome, preco, disponivel !== undefined ? disponivel : true);
+                return res.json(updated);
+            }
+
+            const newDoces = await Doces.create(nome, preco, disponivel !== undefined ? disponivel : true);
             res.status(201).json(newDoces);
         } catch (error) {
-            console.error('Erro ao criar doce:', error);
-            res.status(500).json({ error: 'Erro ao criar novo doce', details: error.message });
+            console.error('Erro ao criar/atualizar doce:', error);
+            res.status(500).json({ error: 'Erro ao processar doce', details: error.message });
         }
     },
 

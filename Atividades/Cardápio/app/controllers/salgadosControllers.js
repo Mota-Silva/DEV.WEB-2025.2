@@ -26,18 +26,24 @@ const salgadosController = {
 
     createSalgados: async (req, res) => {
         try {
-            const { nome, preco, disponivel } = req.body;
+            const { id, nome, preco, disponivel } = req.body;
             
-            if (!nome || !preco || !disponivel) {
+            if (!nome || preco === undefined || preco === null || preco === '') {
                 return res.status(400).json({ 
-                    error: 'Todos os campos são obrigatórios (nome, preco, disponivel)' 
+                    error: 'Campos obrigatórios: nome, preco' 
                 });
             }
-            const newSalgados = await Salgados.create(nome, preco, disponivel);
+
+            if (id) {
+                const updated = await Salgados.update(id, nome, preco, disponivel !== undefined ? disponivel : true);
+                return res.json(updated);
+            }
+
+            const newSalgados = await Salgados.create(nome, preco, disponivel !== undefined ? disponivel : true);
             res.status(201).json(newSalgados);
         } catch (error) {
-            console.error('Erro ao criar salgado:', error);
-            res.status(500).json({ error: 'Erro ao criar novo salgado', details: error.message });
+            console.error('Erro ao criar/atualizar salgado:', error);
+            res.status(500).json({ error: 'Erro ao processar salgado', details: error.message });
         }
     },
 
